@@ -17,7 +17,7 @@ public class RickAndMortyApiPlanetsTest {
     @Test
     public void sendRequest(){
 
-        RickAndMortyApiPlanets rickAndMortyApiPlanets = new RickAndMortyApiPlanets( new SimpleCache());
+        RickAndMortyApiPlanets rickAndMortyApiPlanets = new RickAndMortyApiPlanets(new SimpleCache());
         List<Planet> planets = rickAndMortyApiPlanets.getPlanets();
 
         assertTrue(Boolean.TRUE);

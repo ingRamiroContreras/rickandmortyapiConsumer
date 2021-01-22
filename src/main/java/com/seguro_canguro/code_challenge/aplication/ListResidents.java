@@ -1,7 +1,12 @@
 package com.seguro_canguro.code_challenge.aplication;
 
-public interface ListResidents<R> {
+import java.util.List;
+import java.util.Map;
 
-    public  R handle();
+import com.seguro_canguro.code_challenge.domain.Resident;
+
+public interface ListResidents {
+
+    public List<Map<String, List<Resident>>> handle();
 
 }

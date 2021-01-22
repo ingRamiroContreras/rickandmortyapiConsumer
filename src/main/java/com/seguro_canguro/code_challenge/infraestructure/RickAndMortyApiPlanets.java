@@ -11,7 +11,6 @@ import com.seguro_canguro.code_challenge.domain.PlanetExternalApi;
 import com.seguro_canguro.code_challenge.domain.Resident;
 import com.seguro_canguro.code_challenge.infraestructure.dto.PlanetDto;
 
-
 public class RickAndMortyApiPlanets implements PlanetExternalApi {
 
     private String URL = "https://rickandmortyapi.com/api/location?type=planet";
@@ -21,7 +20,6 @@ public class RickAndMortyApiPlanets implements PlanetExternalApi {
 
         this.cachingMethod = cachingMethod;
     }
-
 
     @Override
     public List<Planet> getPlanets() {
@@ -33,48 +31,40 @@ public class RickAndMortyApiPlanets implements PlanetExternalApi {
         List<PlanetDto> planetDtoList = PlanetDto.mapToPlanetDto(convertResponse);
         List<Planet> listToReturn = processPlanetDtoList(planetDtoList);
 
-        System.out.println(" ----------------->  tiempo que se demoro en milisegundos: "  + (System.currentTimeMillis() - initTime));
+        System.out.println(" ----------------->  tiempo que se demoro en milisegundos: "
+                + (System.currentTimeMillis() - initTime));
         return listToReturn;
 
     }
 
-    private List<Planet> processPlanetDtoList(List<PlanetDto> planetDtolist){
+    private List<Planet> processPlanetDtoList(List<PlanetDto> planetDtolist) {
 
-        return planetDtolist.stream()
-                .map(getResidentsData())
-                .peek(System.out::println)
-                .collect(Collectors.toList());
+        return planetDtolist.stream().map(getResidentsData()).peek(System.out::println).collect(Collectors.toList());
 
-        
     }
 
-    private Function<PlanetDto,Planet> getResidentsData() {
+    private Function<PlanetDto, Planet> getResidentsData() {
         return planetDto -> {
 
-            List<Resident> residentList = planetDto.getResidentsLinks()
-                .stream()
-                .limit(2)
-                .map(SendRequestResident())
-                .map( responseResidents -> Request.mapperJsonResultToListMap(responseResidents))
-                .map( hasMapResident -> Resident.mapToResident(hasMapResident))
-                .collect(Collectors.toList());
-            
+            List<Resident> residentList = planetDto.getResidentsLinks().stream().limit(2).map(SendRequestResident())
+                    .map(responseResidents -> Request.mapperJsonResultToListMap(responseResidents))
+                    .map(hasMapResident -> Resident.mapToResident(hasMapResident)).collect(Collectors.toList());
+
             return Planet.create(planetDto.getName(), residentList);
         };
     }
 
-
     private Function<? super String, ? extends String> SendRequestResident() {
-        return link ->{
+        return link -> {
 
             String linksinDbMemory = cachingMethod.get(link);
-            if(linksinDbMemory == null )
-                return Request.sendRequest(link);
+            if (linksinDbMemory != null) return linksinDbMemory;
             
-            return linksinDbMemory;
+            String response = Request.sendRequest(link);
+            cachingMethod.add(link, response);
+            return response;
 
-        } ;
+        };
     }
 
-    
 }
