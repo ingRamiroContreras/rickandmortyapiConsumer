@@ -47,25 +47,19 @@ public class RickAndMortyApiPlanets implements PlanetExternalApi {
     private Function<PlanetDto,Planet> getResidentsData() {
         return planetDto -> {
 
-            List<Resident> residentList = planetDto.getResidentsLinks().stream()
-            .map(link -> Request.sendRequest(link))
-            .map( responseResidents -> Request.mapperJsonResultToListMap(responseResidents))
-            .map( hasMapResident -> mapToResident(hasMapResident))
-            .collect(Collectors.toList());
+            List<Resident> residentList = planetDto.getResidentsLinks()
+                .stream()
+                .limit(2)
+                .map(link -> Request.sendRequest(link))
+                .map( responseResidents -> Request.mapperJsonResultToListMap(responseResidents))
+                .map( hasMapResident -> Resident.mapToResident(hasMapResident))
+                .collect(Collectors.toList());
             
             return Planet.create(planetDto.getName(), residentList);
         };
     }
 
-    private Resident mapToResident(Map<String, Object> hasMapResident) {
-
-        String nameResident = (String) hasMapResident.get("name");
-        String statusResident = (String) hasMapResident.get("status");
-        String genderResident = (String) hasMapResident.get("gender");
-        List<String> episodes = (List<String>) hasMapResident.get("episode");
-
-        return Resident.create(nameResident, statusResident, genderResident, episodes.size());
-    }
+    
 
     
 }

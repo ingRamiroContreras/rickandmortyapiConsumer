@@ -1,5 +1,8 @@
 package com.seguro_canguro.code_challenge.domain;
 
+import java.util.List;
+import java.util.Map;
+
 public class Resident {
 
     private String name;
@@ -40,7 +43,16 @@ public class Resident {
                 + status + "]";
     }
 
-    
+    public static Resident mapToResident(Map<String, Object> hasMapResident) {
+
+        String nameResident = (String) hasMapResident.get("name");
+        String statusResident = (String) hasMapResident.get("status");
+        String genderResident = (String) hasMapResident.get("gender");
+        List<String> episodes = (List<String>) hasMapResident.get("episode");
+
+        return Resident.create(nameResident, statusResident, genderResident, episodes.size());
+    }
+
 
     // se puedes retornar todos los tributos en un hashMap y setearlos de una vez en el response en ves de los geters
 
