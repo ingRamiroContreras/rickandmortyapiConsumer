@@ -34,6 +34,14 @@ public class Resident {
         return episodesCount;
     }
 
+    @Override
+    public String toString() {
+        return "Resident [episodesCount=" + episodesCount + ", gender=" + gender + ", name=" + name + ", status="
+                + status + "]";
+    }
+
+    
+
     // se puedes retornar todos los tributos en un hashMap y setearlos de una vez en el response en ves de los geters
 
 }

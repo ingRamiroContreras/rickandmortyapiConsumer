@@ -21,8 +21,13 @@ final public class Planet {
     }
 
 
-    public Planet create(String name, List<Resident> residents){
+    public static Planet create(String name, List<Resident> residents){
         return new Planet(name, residents);
+    }
+
+    @Override
+    public String toString() {
+        return "Planet [name=" + name + ", residents=" + residents + "]";
     }
     
 

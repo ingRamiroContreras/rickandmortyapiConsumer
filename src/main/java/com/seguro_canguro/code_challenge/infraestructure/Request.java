@@ -6,33 +6,27 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seguro_canguro.code_challenge.exception.BaseException;
-import com.seguro_canguro.code_challenge.exception.RickAndMortyApiException;
 
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 public class Request {
 
-    private String URL;
-
-    private Request(String uRL) {
-        URL = uRL;
-    }
-
-    public String sendRequest(){
+   
+    public static String sendRequest(String url) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(URL, String.class);
+            String result = restTemplate.getForObject(url, String.class);
             return result;
         } catch (HttpClientErrorException e) {
-           
-            throw new RickAndMortyApiException(e.getMessage());
+
+            throw new BaseException("Error send request : " + e.getMessage());
         }
 
     }
 
-    public Map<String, Object> mapperJsonResultToListMap(String json) {
+    public static Map<String, Object> mapperJsonResultToListMap(String json) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = new LinkedHashMap<>();
 
@@ -48,11 +42,5 @@ public class Request {
 
     }
 
-    
-    public static Request create(String url){
-        return new Request(url);
-    }
 
-    
-    
 }
