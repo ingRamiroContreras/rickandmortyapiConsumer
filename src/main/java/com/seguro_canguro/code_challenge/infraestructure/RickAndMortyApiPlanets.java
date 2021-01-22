@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.seguro_canguro.code_challenge.domain.CachingMethod;
 import com.seguro_canguro.code_challenge.domain.Planet;
 import com.seguro_canguro.code_challenge.domain.PlanetExternalApi;
 import com.seguro_canguro.code_challenge.domain.Resident;
@@ -14,10 +15,13 @@ import com.seguro_canguro.code_challenge.infraestructure.dto.PlanetDto;
 public class RickAndMortyApiPlanets implements PlanetExternalApi {
 
     private String URL = "https://rickandmortyapi.com/api/location?type=planet";
+    private CachingMethod cachingMethod;
 
+    public RickAndMortyApiPlanets(CachingMethod cachingMethod) {
 
-    public RickAndMortyApiPlanets() {
+        this.cachingMethod = cachingMethod;
     }
+
 
     @Override
     public List<Planet> getPlanets() {
@@ -50,7 +54,7 @@ public class RickAndMortyApiPlanets implements PlanetExternalApi {
             List<Resident> residentList = planetDto.getResidentsLinks()
                 .stream()
                 .limit(2)
-                .map(link -> Request.sendRequest(link))
+                .map(SendRequestResident())
                 .map( responseResidents -> Request.mapperJsonResultToListMap(responseResidents))
                 .map( hasMapResident -> Resident.mapToResident(hasMapResident))
                 .collect(Collectors.toList());
@@ -59,7 +63,18 @@ public class RickAndMortyApiPlanets implements PlanetExternalApi {
         };
     }
 
-    
+
+    private Function<? super String, ? extends String> SendRequestResident() {
+        return link ->{
+
+            String linksinDbMemory = cachingMethod.get(link);
+            if(linksinDbMemory == null )
+                return Request.sendRequest(link);
+            
+            return linksinDbMemory;
+
+        } ;
+    }
 
     
 }
