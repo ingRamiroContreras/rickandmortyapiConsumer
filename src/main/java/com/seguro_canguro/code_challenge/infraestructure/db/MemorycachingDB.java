@@ -1,4 +1,4 @@
-package com.seguro_canguro.code_challenge.infraestructure;
+package com.seguro_canguro.code_challenge.infraestructure.db;
 
 import java.util.HashMap;
 import java.util.Map;

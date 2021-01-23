@@ -1,6 +1,8 @@
 package com.seguro_canguro.code_challenge;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Map;
@@ -16,9 +18,9 @@ public class ProcessPlanetTest {
     @Test
     public void procces_normal_list_planets(){
 
-        List<Map<String, List<Resident>>> response = ProcessPlanet.excecute(BuilderPlanet.getNormalListOfPlanets());
+        List<Map<String, List<Resident>>> response = ProcessPlanet.excecute(BuilderPlanet.getRandomListOfPlanets(2,3));
 
-        assertTrue(Boolean.TRUE);
+        assertTrue("Proces planet trenasform ", response.size() == 2);
     }
     
 }

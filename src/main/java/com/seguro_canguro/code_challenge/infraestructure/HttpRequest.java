@@ -10,10 +10,10 @@ import com.seguro_canguro.code_challenge.exception.BaseException;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-public class Request {
+public class HttpRequest {
 
    
-    public static String sendRequest(String url) {
+    public static String send(String url) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();

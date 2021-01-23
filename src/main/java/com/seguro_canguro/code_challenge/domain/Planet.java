@@ -29,6 +29,10 @@ final public class Planet {
     public String toString() {
         return "Planet [name=" + name + ", residents=" + residents + "]";
     }
+
+    public int countOfResidents(){
+        return residents.size();
+    }
     
 
 }

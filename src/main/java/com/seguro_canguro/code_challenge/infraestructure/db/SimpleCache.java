@@ -1,4 +1,4 @@
-package com.seguro_canguro.code_challenge.infraestructure;
+package com.seguro_canguro.code_challenge.infraestructure.db;
 
 import com.seguro_canguro.code_challenge.domain.CachingMethod;
 

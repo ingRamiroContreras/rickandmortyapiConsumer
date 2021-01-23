@@ -53,6 +53,8 @@ public class Resident {
         return Resident.create(nameResident, statusResident, genderResident, episodes.size());
     }
 
+   
+
 
     // se puedes retornar todos los tributos en un hashMap y setearlos de una vez en el response en ves de los geters
 
