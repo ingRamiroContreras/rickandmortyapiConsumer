@@ -2,7 +2,7 @@ package com.seguro_canguro.code_challenge;
 
 
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class ProcessPlanetTest {
 
         List<Map<String, List<Resident>>> response = ProcessPlanet.excecute(BuilderPlanet.getRandomListOfPlanets(2,3));
 
-        assertTrue("Proces planet trenasform ", response.size() == 2);
+        assertTrue( response.size() == 2);
     }
     
 }
