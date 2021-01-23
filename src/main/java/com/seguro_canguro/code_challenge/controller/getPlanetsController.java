@@ -18,8 +18,6 @@ public class getPlanetsController {
 		this.service = service;
 	}
 
-    
-
 
     @GetMapping("api/planets")
     public List<Map<String, List<Resident>>> get(){

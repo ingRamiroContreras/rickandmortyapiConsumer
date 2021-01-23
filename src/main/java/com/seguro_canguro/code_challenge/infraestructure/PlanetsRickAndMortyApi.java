@@ -40,7 +40,6 @@ public class PlanetsRickAndMortyApi implements PlanetExternalApi {
 
         return planetDtolist.stream()
             .map(getResidentsData())
-            .peek(System.out::println)
             .collect(Collectors.toList());
 
     }
@@ -62,7 +61,9 @@ public class PlanetsRickAndMortyApi implements PlanetExternalApi {
     private String sendRequestResident(String link) {
         
         String linksinDbMemory = cachingMethod.get(link);
-        if (linksinDbMemory != null) return linksinDbMemory;
+        
+        if (linksinDbMemory != null) 
+            return linksinDbMemory;
         
         String response = HttpRequest.send(link);
         cachingMethod.add(link, response);

@@ -18,8 +18,8 @@ public class GetFirstTwoResidentsForPlanet implements ListResidents {
 
     @Override
     public List<Map<String, List<Resident>>> handle() {
-        List<Planet> planets = planetExternalApi.getPlanets();
 
+        List<Planet> planets = planetExternalApi.getPlanets();
         List<Map<String,List<Resident>>> processPlanets = ProcessPlanet.excecute(planets);
 
         return processPlanets;

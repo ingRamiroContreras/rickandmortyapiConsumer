@@ -33,8 +33,11 @@ public class GetFirstTwoResidentsForPlanetTest {
         List<Map<String, List<Resident>>> list = aplication.handle();
 
         Integer maxResidentsOfPlanets = list.stream().map(planet -> {
-            return planet.values().stream().findFirst().get().size();
-        }).peek(System.out::println).reduce(0, (acum, val) -> {
+            return planet.values().stream()
+                    .findFirst()
+                    .get()
+                    .size();
+        }).reduce(0, (acum, val) -> {
             if (val >= acum) {
                 return val;
             }
