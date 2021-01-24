@@ -13,6 +13,10 @@ import com.seguro_canguro.code_challenge.infraestructure.dto.PlanetDto;
 
 public class PlanetsRickAndMortyApi implements PlanetExternalApi {
 
+    /**
+     *
+     */
+    private static final int MAX_OF_RESIDENTS_FOR_PLANET = 2;
     private String URL = "https://rickandmortyapi.com/api/location?type=planet";
     private CachingMethod cachingMethod;
 
@@ -48,7 +52,7 @@ public class PlanetsRickAndMortyApi implements PlanetExternalApi {
         return planetDto -> {
 
             List<Resident> residentList = planetDto.getResidentsLinks().stream()
-                    .limit(2)
+                    .limit(MAX_OF_RESIDENTS_FOR_PLANET)
                     .map(link -> sendRequestResident(link))
                     .map(responseResidents -> HttpRequest.mapperJsonResultToListMap(responseResidents))
                     .map(hasMapResident -> Resident.mapToResident(hasMapResident))
